@@ -34,4 +34,19 @@ def rotate():
     # My implementation of rotate
     
 # Someone take over
-        
+def restart():
+    """If a player lands on a spot that contains a piece from an opposing
+    player, that opposing player's piece will be returned to the start
+    
+    # Would write an if statement with a loop to send the piece back to the
+    start position
+    
+    Args: 
+        name(str): player's name
+        piece(str): player's piece
+        location(int): current piece location on the board
+        start(int): the starting location where the pieces are sent back
+    
+    Returns:
+        The players peice back to the start position
+    """
