@@ -17,13 +17,7 @@ def create_board(self):
             Will create five separate lists and modify them to have string 
             values for each space that the list should contain.      
             """
-            
-
-  
-  
-    
-    
-    
+               
 def select_piece():
     """Player selects which piece to move for their turn.
     
