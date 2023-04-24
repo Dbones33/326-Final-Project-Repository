@@ -17,6 +17,59 @@ def create_board(self):
             Will create five separate lists and modify them to have string 
             values for each space that the list should contain.      
             """
+        
+class Board:
+
+    def __init__(self, size):
+        self.size = size
+        self.board = [[None] * size for _ in range(size)]
+
+    def place_piece(self, piece, x, y):
+        if x < self.size and y < self.size:
+            self.board[y][x] = piece
+        else:
+            raise ValueError("Invalid position entered.")
+
+    def move_piece(self, piece, x, y):
+        if x < self.size and y < self.size:
+            piece_x, piece_y = (-1, -1)
+
+            for i in range(self.size):
+                for j in range(self.size):
+                    if self.board[j][i] == piece:
+                        piece_x, piece_y = (i, j)
+                        break
+
+            if piece_x != -1 and piece_y != -1:
+                self.board[piece_y][piece_x] = None
+                self.board[y][x] = piece
+            else:
+                raise ValueError("Piece not found on board.")
+        else:
+            raise ValueError("Invalid position entered.")
+
+    def print_board(self):
+        for row in self.board:
+            print(row)
+
+
+class Piece:
+    def __init__(self, player_id, piece_id):
+        self.player_id = player_id
+        self.piece_id = piece_id
+
+    def __repr__(self):
+        return f"P{self.player_id}_{self.piece_id}"
+
+# Example usage:
+board = Board(15)
+piece1 = Piece(1, 1)
+piece2 = Piece(1, 2)
+board.place_piece(piece1, 0, 0)
+board.place_piece(piece2, 1, 1)
+board.print_board()
+board.move_piece(piece1, 3, 3)
+board.print_board()
                
 def select_piece():
     """Player selects which piece to move for their turn.
@@ -26,7 +79,7 @@ def select_piece():
         piece (str): the player's piece 
         
     Returns:
-        The piece that the player selected to play with for thier turn.
+        The piece that the player selected to play with for their turn.
     
     """
     
