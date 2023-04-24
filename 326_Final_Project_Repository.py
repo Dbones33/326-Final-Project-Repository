@@ -92,6 +92,10 @@ class Select_Piece(Piece):
         self.player = player
         self.piece = piece 
         
+    def selection(self):
+        self.player = input("Which player are you?: ")
+        self.piece = input("Which piece would you like to move? [1, 2, 3, 4]: ")    
+        
     def __repr__(self):
         return f"{self.player} has selected {self.piece}"
         
