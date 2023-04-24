@@ -93,7 +93,7 @@ class Select_Piece(Piece):
         self.piece = piece 
         
     def __repr__(self):
-        
+        return f"{self.player} has selected {self.piece}"
         
         
         
