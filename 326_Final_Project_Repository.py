@@ -54,9 +54,10 @@ class Board:
 
 
 class Piece:
-    def __init__(self, player_id, piece_id):
+    def __init__(self, player_id, piece_id, position_id):
         self.player_id = player_id
         self.piece_id = piece_id
+        self.position_id = position_id
 
     def __repr__(self):
         return f"P{self.player_id}_{self.piece_id}"
@@ -70,7 +71,10 @@ board.place_piece(piece2, 1, 1)
 board.print_board()
 board.move_piece(piece1, 3, 3)
 board.print_board()
-               
+     
+     
+     
+          
 def select_piece():
     """Player selects which piece to move for their turn.
     
@@ -82,6 +86,19 @@ def select_piece():
         The piece that the player selected to play with for their turn.
     
     """
+    
+class Select_Piece(Piece):
+    def __init__(self, player, piece):
+        self.player = player
+        self.piece = piece 
+        
+    def __repr__(self):
+        
+        
+        
+        
+        
+        
     
 def rotate():
     '''Moves player pieces around the game board.
