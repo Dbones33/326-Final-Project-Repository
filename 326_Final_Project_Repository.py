@@ -1,4 +1,5 @@
 """A program for playing the game, Ludo."""
+import random
 
 class Player:
     """A player in the game, Ludo.
@@ -45,46 +46,75 @@ class LudoBoard:
         while count <= 6:
             green_finish_line.append(f"space{i}")
             count += 1   
-               
-     def roll_dice(self):
-            return random.randint(1, 6)
 
-        def move_piece(self, player, piece):
-            roll = self.roll_dice()
-            new_position = self.players[player][piece] + roll
+class Ludo:
+    def __init__(self):
+        self.board = [0]*52
+        self.players = {1: [0]*4, 2: [0]*4}
+        self.winner = None
 
-            if new_position <= 57:
-                self.players[player][piece] = new_position
+    def print_board(self):
+        for i, cell in enumerate(self.board):
+            print(f'{cell:2}', end=' ')
+            if (i + 1) % 13 == 0:
+                print()
 
-                if new_position == 57:
-                    self.finished_pieces[player] += 1
-                    if self.finished_pieces[player] == 4:
-                        self.winner = player
+    def roll_dice(self):
+        return random.randint(1, 6)
 
-        def play_game(self):
-            while not self.winner:
-                self.play_round()
-             print(f"The winner is {self.winner}, congratulations!")
+    def is_valid_move(self, player, piece, steps):
+        pos = self.players[player][piece] + steps
+        return pos <= 51
+
+    def move_piece(self, player, piece, steps):
+        old_pos = self.players[player][piece]
+        new_pos = old_pos + steps
+
+        # Remove piece from the old position
+        if old_pos != 0:
+            self.board[old_pos - 1] = 0
+
+        # Place piece in the new position
+        self.board[new_pos - 1] = player
+        self.players[player][piece] = new_pos
+
+        # Check for winner
+        if new_pos == 51:
+            self.winner = player
+
+    def play_turn(self, player):
+        roll = self.roll_dice()
+        print(f"Player {player} rolled a {roll}.")
+
+        valid_moves = [idx for idx, piece in enumerate(self.players[player]) if self.is_valid_move(player, idx, roll)]
+
+        if not valid_moves:
+            print("No valid moves. Skipping turn.")
+            return
+
+        while True:
+            piece_choice = int(input(f"Player {player}, which piece do you want to move? {valid_moves}: ")) - 1
+
+            if piece_choice in valid_moves:
+                self.move_piece(player, piece_choice, roll)
+                break
+            else:
+                print("Invalid choice. Try again.")
+
+    def play(self):
+        turn = 0
+        while not self.winner:
+            player = 1 + (turn % 2)
+            self.play_turn(player)
+            self.print_board()
+            turn += 1
+
+        print(f"Congratulations, player {self.winner}! You have won the game!")
 
 
-class Piece:
-    def __init__(self, player_id, piece_id, position_id):
-        self.player_id = player_id
-        self.piece_id = piece_id
-        self.position_id = position_id
-
-    def __repr__(self):
-        return f"P{self.player_id}_{self.piece_id}"
-
-# Example usage:
-board = Board(15)
-piece1 = Piece(1, 1)
-piece2 = Piece(1, 2)
-board.place_piece(piece1, 0, 0)
-board.place_piece(piece2, 1, 1)
-board.print_board()
-board.move_piece(piece1, 3, 3)
-board.print_board()
+if __name__ == "__main__":
+    game = Ludo()
+    game.play()
      
      
      
