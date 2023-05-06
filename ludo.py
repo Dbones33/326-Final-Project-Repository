@@ -73,6 +73,22 @@ class Ludo:
 
         print(f"Congratulations, player {self.winner}! You have won the game!")
 
+    def who_is_winning(self):
+        p1_pieces_finished = 0
+        for piece in self.players[1]:
+            if piece == 51:
+                p1_pieces_finished += 1
+        p2_pieces_finished = 0
+        for piece in self.players[2]:
+            if piece == 51:
+                p2_pieces_finished += 1
+        if p1_pieces_finished != p1_pieces_finished:
+            if max(p1_pieces_finished, p2_pieces_finished)==p1_pieces_finished:
+                return f"Player1 is winning!"
+            else:
+                return f"Player2 is winning!"
+        else:
+            return f"The two players are tied!"
 
 if __name__ == "__main__":
     game = Ludo()
