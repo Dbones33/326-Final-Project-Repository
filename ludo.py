@@ -129,6 +129,16 @@ if __name__ == "__main__":
     game.bar_plot()
     
     args = argument_parser(argv[1:])
-    game(args.player1_name, args.player2_name, args.save_game, args.load_game)
-    
+    if args.player1_name:
+        game.players[1] = args.player1_name
+        print(f"Player 1's name is {args.player1_name}")
+    if args.player2_name:
+        game.players[2] = args.player2_name
+        print(f"Player 2's name is {args.playe21_name}")
+    if args.save_game:
+        game.save_game(args.save_game)
+        print(f"The game has been saved to {args.save_game}")
+    if args.load_game:
+        game.load_game(args.load_game)
+        print(f"The game has been loaded from {args.load_game}")
     
