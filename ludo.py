@@ -1,4 +1,4 @@
-import argparse
+from argparse import ArgumentParser
 import json
 import random
 import pandas as pd 
@@ -111,7 +111,7 @@ class Ludo:
         else:
             return f"The two players are tied!"
         
-    def save_game(self, filepath):
+    def save_game(self):
         saved_game = {
            "board": self.board,
            "players": self.players,
@@ -120,9 +120,9 @@ class Ludo:
            "player2_spaces_moved": self.player2_spaces_moved 
         }
         
-        with open(filepath, "w", encoding = "utf-8") as f:
+        with open("ludo_saved_game.json", "w", encoding = "utf-8") as f:
             json.dump(saved_game, f)
-            
+                
 
 if __name__ == "__main__":
     game = Ludo()
