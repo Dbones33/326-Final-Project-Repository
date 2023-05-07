@@ -1,3 +1,5 @@
+import argparse
+import json
 import random
 import pandas as pd 
 from collections import OrderedDict
@@ -108,7 +110,22 @@ class Ludo:
                 return f"Player2 is winning!"
         else:
             return f"The two players are tied!"
+        
+    def save_game(self, filepath):
+        saved_game = {
+           "board": self.board,
+           "players": self.players,
+           "winner": self.winner,
+           "player1_spaces_moved": self.player1_spaces_moved,
+           "player2_spaces_moved": self.player2_spaces_moved 
+        }
+        
+        with open(filepath, "w", encoding = "utf-8") as f:
+            json.dump(saved_game, f)
+            
 
 if __name__ == "__main__":
     game = Ludo()
     game.play()
+    
+    
