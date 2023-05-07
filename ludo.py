@@ -1,3 +1,5 @@
+import argparse
+import json
 import random
 import pandas as pd 
 from collections import OrderedDict
@@ -84,32 +86,38 @@ class Ludo:
 
         print(f"Congratulations, player {self.winner}! You have won the game!")
         
-         #Making and showing barplot of spaces moved by each player.
-        spaces_moved = OrderedDict([ ('Players', ['Player1', 'Player2']),
-                        ('Spaces moved', [self.player1_spaces_moved, 
-                        self.player2_spaces_moved]) ])  
-        df = pd.DataFrame.from_dict(spaces_moved)
-        df.plot.bar(x='Players', y='Spaces moved')
-        plt.show()
-"""
-    def who_is_winning(self):
-        p1_pieces_finished = 0
-        for piece in self.players[1]:
-            if piece == 51:
-                p1_pieces_finished += 1
-        p2_pieces_finished = 0
-        for piece in self.players[2]:
-            if piece == 51:
-                p2_pieces_finished += 1
-        if p1_pieces_finished != p1_pieces_finished:
-            if max(p1_pieces_finished, p2_pieces_finished)==p1_pieces_finished:
-                return f"Player1 is winning!"
-            else:
-                return f"Player2 is winning!"
-        else:
-            return f"The two players are tied!"
-"""
+    def bar_plot(self):
+        if self.winner:
+            #Making and showing barplot of spaces moved by each player.
+            spaces_moved = OrderedDict([ ('Players', ['Player1', 'Player2']),
+                            ('Spaces moved', [self.player1_spaces_moved, 
+                            self.player2_spaces_moved]) ])  
+            df = pd.DataFrame.from_dict(spaces_moved)
+            df.plot.bar(x='Players', y='Spaces moved')
+            plt.show()     
+        
+    def save_game(self, filepath):
+        saved_game = {
+           "board": self.board,
+           "players": self.players,
+           "winner": self.winner,
+           "player1_spaces_moved": self.player1_spaces_moved,
+           "player2_spaces_moved": self.player2_spaces_moved 
+        }
+        
+        with open(filepath, "w", encoding = "utf-8") as f:
+            json.dump(saved_game, f)
+            
+    def load_game(self):
+        with open("ludo_saved_game.json", 'r') as openfile:
+            load_game = json.load(openfile)
+        
+        print(load_game)
+        print(type(load_game))
+            
 
 if __name__ == "__main__":
     game = Ludo()
     game.play()
+    
+    
