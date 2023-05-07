@@ -108,12 +108,13 @@ class Ludo:
         with open(filepath, "w", encoding = "utf-8") as f:
             json.dump(saved_game, f)
             
-
-
-
-
-
-
+    def load_game(self, filepath):
+        with open(filepath, 'r') as openfile:
+            loaded_game = json.load(openfile)
+                  
+        print(loaded_game)
+        print(type(loaded_game))
+        
 def argument_parser(args):
     parser = ArgumentParser()
     parser.add_argument("--player1_name", type=str, help="Allow player1 to change their name")
