@@ -1,10 +1,15 @@
 import random
+import pandas as pd 
+from collections import OrderedDict
+import matplotlib.pyplot as plt
 
 class Ludo:
     def __init__(self):
         self.board = [0]*52
         self.players = {1: [0]*4, 2: [0]*4}
         self.winner = None
+        self.player1_spaces_moved = 0
+        self.player2_spaces_moved = 0
 
     def print_board(self):
         for i, cell in enumerate(self.board):
@@ -31,6 +36,12 @@ class Ludo:
         old_pos = self.players[player][piece]
         new_pos = old_pos + steps
         self.restart(new_pos)
+        
+        #updating spaces moved attributes
+        if self.players[player] == self.players[1]:
+            self.player1_spaces_moved += steps
+        else:
+            self.player2_spaces_moved += steps
 
         # Remove piece from the old position
         if old_pos != 0:
@@ -72,6 +83,14 @@ class Ludo:
             turn += 1
 
         print(f"Congratulations, player {self.winner}! You have won the game!")
+        
+         #Making and showing barplot of spaces moved by each player.
+        spaces_moved = OrderedDict([ ('Players', ['Player1', 'Player2']),
+                        ('Spaces moved', [self.player1_spaces_moved, 
+                        self.player2_spaces_moved]) ])  
+        df = pd.DataFrame.from_dict(spaces_moved)
+        df.plot.bar(x='Players', y='Spaces moved')
+        plt.show()
 
     def who_is_winning(self):
         p1_pieces_finished = 0
