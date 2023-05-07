@@ -91,7 +91,7 @@ class Ludo:
         df = pd.DataFrame.from_dict(spaces_moved)
         df.plot.bar(x='Players', y='Spaces moved')
         plt.show()
-
+"""
     def who_is_winning(self):
         p1_pieces_finished = 0
         for piece in self.players[1]:
@@ -108,6 +108,7 @@ class Ludo:
                 return f"Player2 is winning!"
         else:
             return f"The two players are tied!"
+"""
 
 if __name__ == "__main__":
     game = Ludo()
