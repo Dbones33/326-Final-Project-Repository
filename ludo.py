@@ -2,6 +2,7 @@ from argparse import ArgumentParser
 import json
 import random
 import pandas as pd 
+from sys import argv
 from collections import OrderedDict
 import matplotlib.pyplot as plt
 
@@ -122,10 +123,20 @@ class Ludo:
         
         with open(filepath, "w", encoding = "utf-8") as f:
             json.dump(saved_game, f)
-
+            
+def argument_parser(args):
+    parser = ArgumentParser()
+    parser.add_argument("--player1_name", type=str, help="Allow player1 to change their name")
+    parser.add_argument("--player2_name", type=str, help="Allow player2 to change their name")
+    parser.add_arguemnt("--save_game", type=str, help= "Save game to JSON file")
+    parser.add_arguemnt("--load_game", type=str, help= "Load game from JSON file")
+    return parser.argument_parse(args)
 
 if __name__ == "__main__":
     game = Ludo()
     game.play()
+    
+    args = argument_parser(argv[1:])
+    game(args.player1_name, args.player2_name, args.save_game, args.load_game)
     
     
