@@ -95,7 +95,7 @@ class Ludo:
             df.plot.bar(x='Players', y='Spaces moved')
             plt.show()     
         
-    def save_game(self):
+    def save_game(self, filepath):
         saved_game = {
            "board": self.board,
            "players": self.players,
@@ -104,7 +104,7 @@ class Ludo:
            "player2_spaces_moved": self.player2_spaces_moved 
         }
         
-        with open("ludo_saved_game.json", "w", encoding = "utf-8") as f:
+        with open(filepath, "w", encoding = "utf-8") as f:
             json.dump(saved_game, f)
             
     def load_game(self, filepath):
