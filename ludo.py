@@ -117,11 +117,11 @@ class Ludo:
         
 def argument_parser(args):
     parser = ArgumentParser()
-    parser.add_argument("--player1_name", type=str, help="Allow player1 to change their name")
-    parser.add_argument("--player2_name", type=str, help="Allow player2 to change their name")
+    parser.add_argument("--player1_name", type=str, help= "Allow player1 to change their name")
+    parser.add_argument("--player2_name", type=str, help= "Allow player2 to change their name")
     parser.add_argument("--save_game", type=str, help= "Save game to JSON file")
     parser.add_argument("--load_game", type=str, help= "Load game from JSON file")
-    return parser.argument_parser(args)
+    return parser.parse_args(args)
 
 if __name__ == "__main__":
     game = Ludo()
