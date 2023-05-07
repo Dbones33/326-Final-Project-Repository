@@ -1,4 +1,4 @@
-import argparse
+from argparse import ArgumentParser
 import json
 import random
 import pandas as pd 
@@ -88,7 +88,6 @@ class Ludo:
         
     def bar_plot(self):
         if self.winner:
-            #Making and showing barplot of spaces moved by each player.
             spaces_moved = OrderedDict([ ('Players', ['Player1', 'Player2']),
                             ('Spaces moved', [self.player1_spaces_moved, 
                             self.player2_spaces_moved]) ])  
@@ -96,7 +95,7 @@ class Ludo:
             df.plot.bar(x='Players', y='Spaces moved')
             plt.show()     
         
-    def save_game(self, filepath):
+    def save_game(self):
         saved_game = {
            "board": self.board,
            "players": self.players,
@@ -105,19 +104,20 @@ class Ludo:
            "player2_spaces_moved": self.player2_spaces_moved 
         }
         
-        with open(filepath, "w", encoding = "utf-8") as f:
+        with open("ludo_saved_game.json", "w", encoding = "utf-8") as f:
             json.dump(saved_game, f)
             
-    def load_game(self):
-        with open("ludo_saved_game.json", 'r') as openfile:
-            load_game = json.load(openfile)
+    def load_game(self, filepath):
+        with open(filepath, 'r') as openfile:
+            loaded_game = json.load(openfile)
+                  
+        print(loaded_game)
+        print(type(loaded_game))
         
-        print(load_game)
-        print(type(load_game))
-            
 
 if __name__ == "__main__":
     game = Ludo()
     game.play()
+    game.bar_plot()
     
     
