@@ -25,7 +25,7 @@ class Ludo:
 
     def is_valid_move(self, player, piece, steps):
         pos = self.players[player][piece] + steps
-        return pos <= 51
+        return pos <= 52
     
     def restart(self, position):
         player = self.board[position - 1] 
@@ -33,7 +33,7 @@ class Ludo:
             self.board[position - 1] = 0
             piece = self.players[player].index(position)
             self.players[player][piece] = 0
-            print(f"Player {player}'s piece will get sent back to start")
+            print(f"Player {player}'s piece got sent back to the start")
             
     def move_piece(self, player, piece, steps):
         old_pos = self.players[player][piece]
@@ -55,7 +55,7 @@ class Ludo:
         self.players[player][piece] = new_pos
 
         # Check for winner
-        if new_pos == 51:
+        if new_pos == 52:
             self.winner = player
 
     def play_turn(self, player):
@@ -119,9 +119,10 @@ def argument_parser(args):
     parser = ArgumentParser()
     parser.add_argument("--player1_name", type=str, help="Allow player1 to change their name")
     parser.add_argument("--player2_name", type=str, help="Allow player2 to change their name")
-    parser.add_arguemnt("--save_game", type=str, help= "Save game to JSON file")
-    parser.add_arguemnt("--load_game", type=str, help= "Load game from JSON file")
-    return parser.argument_parse(args)
+    parser.add_argument("--save_game", type=str, help= "Save game to JSON file")
+    parser.add_argument("--load_game", type=str, help= "Load game from JSON file")
+    return parser.parse_args(args)
+
 
 if __name__ == "__main__":
     game = Ludo()
