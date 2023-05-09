@@ -6,9 +6,20 @@ import sys
 from collections import OrderedDict
 import matplotlib.pyplot as plt
 
+class Board:
+    def __init__(self):
+        self.board = [0] * 52
+
+    def __getitem__(self, index):
+        return self.board[index]
+
+    def __setitem__(self, index, value):
+        self.board[index] = value
+
+
 class Ludo:
     def __init__(self):
-        self.board = [0]*52
+        self.board = Board()
         self.players = {1: [0]*4, 2: [0]*4}
         self.winner = None
         self.player1_spaces_moved = 0
