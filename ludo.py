@@ -145,7 +145,7 @@ if __name__ == "__main__":
         print(f"Player 1's name is {args.player1_name}")
     if args.player2_name:
         game.players[2] = args.player2_name
-        print(f"Player 2's name is {args.playe21_name}")
+        print(f"Player 2's name is {args.player2_name}")
     if args.load_game:
         game.load_game(args.load_game)
         print(f"The game has been loaded from {args.load_game}")
