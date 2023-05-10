@@ -151,6 +151,8 @@ class Ludo:
         if save == "y":
             filepath = input("Enter the name of a JSON file to save to: ")
             self.save_game(filepath)
+            print("Game has been saved.")
+            exit()
                 
     def play(self):
         # Starts the ludo game from turn 1
