@@ -1,4 +1,21 @@
+from argparse import ArgumentParser
+import json
 import random
+import pandas as pd 
+import sys
+from collections import OrderedDict
+import matplotlib.pyplot as plt
+
+class Board:
+    def __init__(self):
+        self.board = [0] * 52
+
+    def __getitem__(self, index):
+        return self.board[index]
+
+    def __setitem__(self, index, value):
+        self.board[index] = value
+
 
 class Ludo:
     # Demonstrates the board game, Ludo.
@@ -7,12 +24,16 @@ class Ludo:
     #     board(list of int): the board filled with '0' spaces
     #     players(dict of int): players 1 and 2 and four pieces assigned to each player
     #     winner(None): game's winner at the end of execution
-    
-    def __init__(self):
-    # Initializes the players and board before playing Ludo.
-        self.board = [0]*52
+
+    def __init__(self, player1_name, player2_name):
+        # Initializes the players and board before playing Ludo.
+        self.board = Board()
         self.players = {1: [0]*4, 2: [0]*4}
         self.winner = None
+        self.player1_spaces_moved = 0
+        self.player2_spaces_moved = 0
+        self.player_name_dict = {1: player1_name, 2: player2_name}
+        
 
     def print_board(self):
         # Establishes a board with 0s for empty spaces
@@ -43,7 +64,7 @@ class Ludo:
         # Returns:
         #     a space inside the board's dimensions
         pos = self.players[player][piece] + steps
-        return pos <= 51
+        return pos <= 52
     
     def restart(self, position):
         # Sends a player's piece back to start if another player lands on their space.
@@ -58,7 +79,7 @@ class Ludo:
             self.board[position - 1] = 0
             piece = self.players[player].index(position)
             self.players[player][piece] = 0
-            print(f"Player {player}'s piece will get sent back to start")
+            print(f"Player {player}'s piece got sent back to the start")
             
     def move_piece(self, player, piece, steps):
         # Moves a player's piece from either start or their previous position
@@ -74,6 +95,12 @@ class Ludo:
         old_pos = self.players[player][piece]
         new_pos = old_pos + steps
         self.restart(new_pos)
+        
+        #updating spaces moved attributes
+        if player == 1:
+            self.player1_spaces_moved += steps
+        else:
+            self.player2_spaces_moved += steps
 
         # Remove piece from the old position
         if old_pos != 0:
@@ -84,7 +111,7 @@ class Ludo:
         self.players[player][piece] = new_pos
 
         # Check for winner
-        if new_pos == 51:
+        if new_pos == 52:
             self.winner = player
 
     def play_turn(self, player):
@@ -101,23 +128,24 @@ class Ludo:
         #     A user will have to select a piece they can move if the piece they want to move
         #     cannot move from its current position.
         roll = self.roll_dice()
-        print(f"Player {player} rolled a {roll}.")
+        print(f"{self.player_name_dict[player]} rolled a {roll}.")
 
-        valid_moves = [idx for idx, piece in enumerate(self.players[player]) if self.is_valid_move(player, idx, roll)]
+        valid_moves = [idx for idx, piece in enumerate(self.players[player]) 
+                       if self.is_valid_move(player, idx, roll)]
 
         if not valid_moves:
             print("No valid moves. Skipping turn.")
             return
 
         while True:
-            piece_choice = int(input(f"Player {player}, which piece do you want to move? {valid_moves}: "))
+            piece_choice = int(input(f"{self.player_name_dict[player]}, which piece do you want to move? {valid_moves}: "))
 
             if piece_choice in valid_moves:
                 self.move_piece(player, piece_choice, roll)
                 break
             else:
                 print("Invalid choice. Try again.")
-
+                
     def play(self):
         # Starts the ludo game from turn 1
         
@@ -135,8 +163,61 @@ class Ludo:
             turn += 1
 
         print(f"Congratulations, player {self.winner}! You have won the game!")
+        
+    def bar_plot(self):
+        if self.winner:
+            spaces_moved = OrderedDict([ ('Players', ['Player1', 'Player2']),
+                            ('Spaces moved', [self.player1_spaces_moved, 
+                            self.player2_spaces_moved]) ])  
+            df = pd.DataFrame.from_dict(spaces_moved)
+            df.plot.bar(x='Players', y='Spaces moved')
+            plt.show()     
+        
+    def save_game(self, filepath):
+        saved_game = {
+           "board": self.board,
+           "players": self.players,
+           "winner": self.winner,
+           "player1_spaces_moved": self.player1_spaces_moved,
+           "player2_spaces_moved": self.player2_spaces_moved 
+        }
+        
+        with open(filepath, "w", encoding = "utf-8") as f:
+            json.dump(saved_game, f)
+            
+    def load_game(self, filepath):
+        with open(filepath, 'r') as openfile:
+            loaded_game = json.load(openfile)
+                  
+        print(loaded_game)
+        print(type(loaded_game))
+        
+def argument_parser(args):
+    parser = ArgumentParser()
+    parser.add_argument("--player1_name", default = "Player 1", type=str, help= "Allow player1 to change their name")
+    parser.add_argument("--player2_name", default = "Player 2", type=str, help= "Allow player2 to change their name")
+    parser.add_argument("--save_game", type=str, help= "Save game to JSON file")
+    parser.add_argument("--load_game", type=str, help= "Load game from JSON file")
+    return parser.parse_args(args)
 
 
-if __name__ == "__main__":
-    game = Ludo()
+if __name__ == "__main__":    
+    args = argument_parser(sys.argv[1:])
+   
+    game = Ludo(args.player1_name, args.player2_name)
+    
+    
+    if args.load_game:
+        game.load_game(args.load_game)
+        print(f"The game has been loaded from {args.load_game}")
+    
     game.play()
+    
+   
+    
+    game.bar_plot()
+    
+   
+    
+   
+    
