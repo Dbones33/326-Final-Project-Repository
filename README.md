@@ -8,8 +8,27 @@ Ludo.py is the main file that the group worked on and make adjustments during of
 LICENSE does not contribute to the repositiory since it is mainly for use of GitHub.
 
 Running the program from the command line:
-1. Python ludo.py
+1. Python(3) ludo.py (add the 3 of you are on a mac)
 2. After the dice roll, type either 0, 1, 2, or 3 to move a player's piece on the board
 3. Make sure all of one player's four pieces reach the goal to end the game
 
 How to use the program/Interpret the output of the program:
+
+Attribution:
+Method/function            Primary author      Techniques demonstrated
+
+restart                    Emmitt Anton        F-strings containing expressions
+play_turn                  Emmitt Anton        List comprehension 
+
+
+class Board, class Ludo    Justin Gold         Composition of two original classes 
+__getitem__, __setitem__   Justin Gold         Magic methods other than init
+
+
+save_game                  Sam Henderlite      Use of json.dump()
+argument_parser            Sam Henderlite      The ArgumentParser class from the argparse module
+
+
+load_game                  David Kneebone      With statements
+bar_plot                   David Kneebone      Visualizing data with pyplot or seaborn
+
