@@ -12,10 +12,21 @@ class Board:
         self.board = [0] * 52
 
     def __getitem__(self, index):
-        return self.board[index]
+        return self.board[index - 1]
 
     def __setitem__(self, index, value):
-        self.board[index] = value
+        self.board[index - 1] = value
+        
+    def print_board(self):
+        # Establishes a board with 0s for empty spaces
+        
+        # Side effects:
+        #     evenly divide white space between board spaces
+        #     print a board with all spaces set to empty spaces
+        for i, cell in enumerate(self.board):
+            print(f'{cell:2}', end=' ')
+            if (i + 1) % 13 == 0:
+                print()
 
 
 class Ludo:
@@ -37,15 +48,7 @@ class Ludo:
         
 
     def print_board(self):
-        # Establishes a board with 0s for empty spaces
-        
-        # Side effects:
-        #     evenly divide white space between board spaces
-        #     print a board with all spaces set to empty spaces
-        for i, cell in enumerate(self.board):
-            print(f'{cell:2}', end=' ')
-            if (i + 1) % 13 == 0:
-                print()
+        self.board.print_board()
 
     def roll_dice(self):
         # Rolls a die for each player's turn
@@ -75,9 +78,9 @@ class Ludo:
             
         # Side effects:
         #     A player's piece gets sent back to start if a player's piece lands on an occupied space
-        player = self.board[position - 1] 
+        player = self.board[position] 
         if player != 0:
-            self.board[position - 1] = 0
+            self.board[position] = 0
             piece = self.players[player].index(position)
             self.players[player][piece] = 0
             print(f"Player {player}'s piece got sent back to the start")
@@ -105,10 +108,10 @@ class Ludo:
 
         # Remove piece from the old position
         if old_pos != 0:
-            self.board[old_pos - 1] = 0
+            self.board[old_pos] = 0
 
         # Place piece in the new position
-        self.board[new_pos - 1] = player
+        self.board[new_pos] = player
         self.players[player][piece] = new_pos
 
         # Check for winner
