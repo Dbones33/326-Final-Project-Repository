@@ -18,12 +18,14 @@ class Board:
 
 
 class Ludo:
-    def __init__(self):
+    def __init__(self, player1_name, player2_name):
         self.board = Board()
         self.players = {1: [0]*4, 2: [0]*4}
         self.winner = None
         self.player1_spaces_moved = 0
         self.player2_spaces_moved = 0
+        self.player_name_dict = {1: player1_name, 2: player2_name}
+        
 
     def print_board(self):
         for i, cell in enumerate(self.board):
@@ -52,7 +54,7 @@ class Ludo:
         self.restart(new_pos)
         
         #updating spaces moved attributes
-        if self.players[player] == self.players[1]:
+        if player == 1:
             self.player1_spaces_moved += steps
         else:
             self.player2_spaces_moved += steps
@@ -71,16 +73,17 @@ class Ludo:
 
     def play_turn(self, player):
         roll = self.roll_dice()
-        print(f"Player {player} rolled a {roll}.")
+        print(f"{self.player_name_dict[player]} rolled a {roll}.")
 
-        valid_moves = [idx for idx, piece in enumerate(self.players[player]) if self.is_valid_move(player, idx, roll)]
+        valid_moves = [idx for idx, piece in enumerate(self.players[player]) 
+                       if self.is_valid_move(player, idx, roll)]
 
         if not valid_moves:
             print("No valid moves. Skipping turn.")
             return
 
         while True:
-            piece_choice = int(input(f"Player {player}, which piece do you want to move? {valid_moves}: "))
+            piece_choice = int(input(f"{self.player_name_dict[player]}, which piece do you want to move? {valid_moves}: "))
 
             if piece_choice in valid_moves:
                 self.move_piece(player, piece_choice, roll)
@@ -128,8 +131,8 @@ class Ludo:
         
 def argument_parser(args):
     parser = ArgumentParser()
-    parser.add_argument("--player1_name", type=str, help= "Allow player1 to change their name")
-    parser.add_argument("--player2_name", type=str, help= "Allow player2 to change their name")
+    parser.add_argument("--player1_name", default = "Player 1", type=str, help= "Allow player1 to change their name")
+    parser.add_argument("--player2_name", default = "Player 2", type=str, help= "Allow player2 to change their name")
     parser.add_argument("--save_game", type=str, help= "Save game to JSON file")
     parser.add_argument("--load_game", type=str, help= "Load game from JSON file")
     return parser.parse_args(args)
@@ -138,23 +141,16 @@ def argument_parser(args):
 if __name__ == "__main__":    
     args = argument_parser(sys.argv[1:])
    
-    game = Ludo()
+    game = Ludo(args.player1_name, args.player2_name)
     
-    if args.player1_name:
-        game.players[1] = args.player1_name
-        print(f"Player 1's name is {args.player1_name}")
-    if args.player2_name:
-        game.players[2] = args.player2_name
-        print(f"Player 2's name is {args.player2_name}")
+    
     if args.load_game:
         game.load_game(args.load_game)
         print(f"The game has been loaded from {args.load_game}")
     
     game.play()
     
-    if args.save_game:
-        game.save_game(args.save_game)
-        print(f"The game has been saved to {args.save_game}")
+   
     
     game.bar_plot()
     
