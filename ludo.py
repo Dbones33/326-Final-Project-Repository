@@ -8,13 +8,42 @@ from collections import OrderedDict
 import matplotlib.pyplot as plt
 
 class Board:
+    """Create the board for the game Ludo 
+    
+    Args:
+        index (int): index of a cell on the board
+        value (int): state of the cell on the board
+        
+    Attributes:
+        board (list of int): a baord filled with 0's
+        
+    Returns:
+        A board of 0's that is 4 rows and 13 columns
+    """
     def __init__(self):
+        """Creating the board that will have 52 0's 
+        """
         self.board = [0] * 52
 
     def __getitem__(self, index):
+        """Gives you the ability to access a certain cell on the board, subtracts 1 
+        from the index
+        
+        Args:
+            index (int): index of a cell on the board
+            
+        Returns: 
+            the cvalue of the cell on the board
+        """
         return self.board[index - 1]
 
     def __setitem__(self, index, value):
+        """Give you the ability to set the value of a cell when given its index
+        
+        Args:
+            index (int): index of a cell on the board
+            value (int): state of the cell on the board
+        """
         self.board[index - 1] = value
         
     def print_board(self):
