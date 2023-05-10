@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import argparse
 import json
 import random
 import pandas as pd 
@@ -145,6 +146,11 @@ class Ludo:
                 break
             else:
                 print("Invalid choice. Try again.")
+            
+        save = input("Would you like to save the game? (y/n): ")
+        if save == "y":
+            filepath = input("Enter the name of a JSON file to save to: ")
+            self.save_game(filepath)
                 
     def play(self):
         # Starts the ludo game from turn 1
@@ -175,11 +181,12 @@ class Ludo:
         
     def save_game(self, filepath):
         saved_game = {
-           "board": self.board,
+           "board": self.board.board,
            "players": self.players,
            "winner": self.winner,
            "player1_spaces_moved": self.player1_spaces_moved,
-           "player2_spaces_moved": self.player2_spaces_moved 
+           "player2_spaces_moved": self.player2_spaces_moved,
+           "player_name_dict": self.player_name_dict
         }
         
         with open(filepath, "w", encoding = "utf-8") as f:
@@ -194,10 +201,12 @@ class Ludo:
         
 def argument_parser(args):
     parser = ArgumentParser()
-    parser.add_argument("--player1_name", default = "Player 1", type=str, help= "Allow player1 to change their name")
-    parser.add_argument("--player2_name", default = "Player 2", type=str, help= "Allow player2 to change their name")
-    parser.add_argument("--save_game", type=str, help= "Save game to JSON file")
-    parser.add_argument("--load_game", type=str, help= "Load game from JSON file")
+    parser.add_argument("--player1_name", default = "Player 1", type=str, 
+                        help= "Allow player1 to change their name")
+    parser.add_argument("--player2_name", default = "Player 2", type=str,
+                        help= "Allow player2 to change their name")
+    parser.add_argument("--load_game", type = argparse.FileType("r"),
+                        help= "Load game from JSON file")
     return parser.parse_args(args)
 
 
@@ -205,7 +214,6 @@ if __name__ == "__main__":
     args = argument_parser(sys.argv[1:])
    
     game = Ludo(args.player1_name, args.player2_name)
-    
     
     if args.load_game:
         game.load_game(args.load_game)
