@@ -77,6 +77,8 @@ class Ludo:
         
 
     def print_board(self):
+        """Prints the board within the Ludo class
+        """
         self.board.print_board()
 
     def roll_dice(self):
