@@ -224,6 +224,15 @@ class Ludo:
             plt.show()     
         
     def save_game(self, filepath):
+        """Saves the current game state to a JSON file.
+        
+        Args:
+            filepath (str): the path to a JSON file the user can save the game 
+            state to.
+            
+        Side effects: 
+            writes to a JSON file.
+        """
         saved_game = {
            "board": self.board.board,
            "players": self.players,
@@ -239,10 +248,7 @@ class Ludo:
             
     def load_game(self, filepath):
         with open(filepath, 'r') as openfile:
-            loaded_game = json.load(openfile)
-            
-        #print(loaded_game)
-         
+            loaded_game = json.load(openfile) 
         
         self.board.board = loaded_game["board"] 
         self.players = loaded_game["players"]
@@ -256,6 +262,15 @@ class Ludo:
         
         
 def argument_parser(args):
+    """Parse command line arguments. Allows the user to change player name or 
+    load a pre-existing game at the command line.
+    
+    Args:
+        args (str): arguments from the command line.
+        
+    Returns:
+        parser.parse_args(args): the parsed arguments, as a namespace.
+    """
     parser = ArgumentParser()
     parser.add_argument("--player1_name", default = "Player 1", type=str, 
                         help= "Allow player1 to change their name")
@@ -267,6 +282,12 @@ def argument_parser(args):
 
 
 if __name__ == "__main__":    
+    """Calls argument_parser(), play(), __repr__(), and bar_plot()
+    
+    Side effects:
+        Prints a message that the game has been loaded and from what file if
+        load_game() is used.
+    """
     args = argument_parser(sys.argv[1:])
    
     game = Ludo(args.player1_name, args.player2_name)
