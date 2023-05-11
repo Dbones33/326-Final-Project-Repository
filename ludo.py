@@ -210,7 +210,7 @@ class Ludo:
         
     def __repr__(self):
         print(f"{self.player_name_dict[1]} moved {self.player1_spaces_moved} spaces.")
-        print(f"{self.player_name_dict[2]} moved {self.player1_spaces_moved} spaces.")
+        print(f"{self.player_name_dict[2]} moved {self.player2_spaces_moved} spaces.")
         print(f"{self.player_name_dict[1]} got sent back to start {self.sent_back_count[1]} times.")
         print(f"{self.player_name_dict[2]} got sent back to start {self.sent_back_count[2]} times.")
         
@@ -230,7 +230,8 @@ class Ludo:
            "winner": self.winner,
            "player1_spaces_moved": self.player1_spaces_moved,
            "player2_spaces_moved": self.player2_spaces_moved,
-           "player_name_dict": self.player_name_dict
+           "player_name_dict": self.player_name_dict, 
+           "sent_back_count": self.sent_back_count
         }
         
         with open(filepath, "w", encoding = "utf-8") as f:
@@ -245,7 +246,8 @@ class Ludo:
         self.winner = loaded_game["winner"]
         self.player1_spaces_moved = loaded_game["player1_spaces_moved"]
         self.player2_spaces_moved = loaded_game["player2_spaces_moved"]
-        self.player_name_dict = loaded_game["player_name_dict"]       
+        self.player_name_dict = loaded_game["player_name_dict"]   
+        self.sent_back_count = loaded_game["sent_back_count"]    
         
         
 def argument_parser(args):
