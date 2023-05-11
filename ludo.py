@@ -33,7 +33,7 @@ class Board:
             index (int): index of a cell on the board
             
         Returns: 
-            the cvalue of the cell on the board
+            the value of the cell on the board
         """
         return self.board[index - 1]
 
