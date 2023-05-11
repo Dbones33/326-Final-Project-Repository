@@ -20,20 +20,20 @@ Use --load_game ludo_save.json even if the user is running the program for the f
 There should only be one winner printed at the end of the game.
 
 Attribution:
-Method/function            Primary author      Techniques demonstrated
+Method/function                      Primary author      Techniques demonstrated
 
-restart                    Emmitt Anton        F-strings containing expressions
-play_turn                  Emmitt Anton        List comprehension 
-
-
-class Board, class Ludo    Justin Gold         Composition of two original classes 
-__getitem__, __setitem__   Justin Gold         Magic methods other than init
+restart                              Emmitt Anton        F-strings containing expressions
+play_turn                            Emmitt Anton        List comprehension 
 
 
-save_game                  Sam Henderlite      Use of json.dump()
-argument_parser            Sam Henderlite      The ArgumentParser class from the argparse module
+class Board, class Ludo              Justin Gold         Composition of two original classes 
+__getitem__, __setitem__, __repr__   Justin Gold         Magic methods other than init
 
 
-load_game                  David Kneebone      With statements
-bar_plot                   David Kneebone      Visualizing data with pyplot or seaborn
+save_game                            Sam Henderlite      Use of json.dump()
+argument_parser                      Sam Henderlite      The ArgumentParser class from the argparse module
+
+
+load_game                            David Kneebone      With statements
+bar_plot                             David Kneebone      Visualizing data with pyplot or seaborn
 
