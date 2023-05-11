@@ -47,11 +47,12 @@ class Board:
         self.board[index - 1] = value
         
     def print_board(self):
-        # Establishes a board with 0s for empty spaces
+        '''Establishes a board with 0s for empty spaces
         
-        # Side effects:
-        #     evenly divide white space between board spaces
-        #     print a board with all spaces set to empty spaces
+        Side effects:
+            evenly divide white space between board spaces
+            print a board with all spaces set to empty spaces
+         '''
         for i, cell in enumerate(self.board):
             print(f'{cell:2}', end=' ')
             if (i + 1) % 13 == 0:
@@ -59,13 +60,13 @@ class Board:
 
 
 class Ludo:
-    # Demonstrates the board game, Ludo.
+    '''Demonstrates the board game, Ludo.
     
-    #     Attributes:
-    #     board(list of int): the board filled with '0' spaces
-    #     players(dict of int): players 1 and 2 and four pieces assigned to each player
-    #     winner(None): game's winner at the end of execution
-
+        Attributes:
+        board(list of int): the board filled with '0' spaces
+        players(dict of int): players 1 and 2 and four pieces assigned to each player
+        winner(None): game's winner at the end of execution
+    '''
     def __init__(self, player1_name, player2_name):
         # Initializes the players and board before playing Ludo.
         self.board = Board()
@@ -83,33 +84,36 @@ class Ludo:
         self.board.print_board()
 
     def roll_dice(self):
-        # Rolls a die for each player's turn
+        '''Rolls a die for each player's turn
         
-        # Returns: 
-        #     A random dice roll between 1-6
+        Returns: 
+            A random dice roll between 1-6
+        '''
         return random.randint(1, 6)
 
     def is_valid_move(self, player, piece, steps):
-        # Ensures that a player's piece does not go over the board's dimensions.
+        '''Ensures that a player's piece does not go over the board's dimensions.
         
-        # Args:
-        #     player(int): each player in the game
-        #     piece(int): board game piece from 0-3
-        #     steps(int): number of spaces a piece moves after the dice roll
-            
-        # Returns:
-        #     a space inside the board's dimensions
+        Args:
+            player(int): each player in the game
+            piece(int): board game piece from 0-3
+            steps(int): number of spaces a piece moves after the dice roll
+           
+        Returns:
+            a space inside the board's dimensions
+        '''
         pos = self.players[player][piece] + steps
         return pos <= 52
     
     def restart(self, position):
-        # Sends a player's piece back to start if another player lands on their space.
+        '''Sends a player's piece back to start if another player lands on their space.
         
-        # Args:
-        #     position(int): space on the board
+        Args:
+            position(int): space on the board
             
-        # Side effects:
-        #     A player's piece gets sent back to start if a player's piece lands on an occupied space
+        Side effects:
+            A player's piece gets sent back to start if a player's piece lands on an occupied space
+        '''
         player = self.board[position] 
         if player != 0:
             self.board[position] = 0
@@ -119,16 +123,17 @@ class Ludo:
             print(f"Player {player}'s piece got sent back to the start")
             
     def move_piece(self, player, piece, steps):
-        # Moves a player's piece from either start or their previous position
-        # to a new space on the board.
+        '''Moves a player's piece from either start or their previous position
+        to a new space on the board.
         
-        # Args:
-        #     player(int): each player in the game
-        #     piece(int): board game piece from 0-3
-        #     steps(int): number of spaces a piece moves after the dice roll
+        Args:
+            player(int): each player in the game
+            piece(int): board game piece from 0-3
+            steps(int): number of spaces a piece moves after the dice roll
         
-        # Returns:
-        #     the board with a moved piece from the last position
+        Returns:
+            the board with a moved piece from the last position
+        '''
         old_pos = self.players[player][piece]
         new_pos = old_pos + steps
         self.restart(new_pos)
@@ -152,18 +157,19 @@ class Ludo:
             self.winner = player
 
     def play_turn(self, player):
-        # Calls the dice method and prompts the player to select a piece that they can move.
+        '''Calls the dice method and prompts the player to select a piece that they can move.
         
-        # Args:
-        #     player(int): each player in the game
+        Args:
+            player(int): each player in the game
             
-        # Returns:
-        #     A skipped turn
-        #     A turn with a player moving one of their pieces
+        Returns:
+            A skipped turn
+            A turn with a player moving one of their pieces
             
-        # Side effects:
-        #     A user will have to select a piece they can move if the piece they want to move
-        #     cannot move from its current position.
+        Side effects:
+            A user will have to select a piece they can move if the piece they want to move
+            cannot move from its current position.
+        '''
         roll = self.roll_dice()
         print(f"{self.player_name_dict[player]} rolled a {roll}.")
 
@@ -191,14 +197,15 @@ class Ludo:
             exit()
                           
     def play(self):
-        # Starts the ludo game from turn 1
+        '''Starts the ludo game from turn 1
         
-        # Args:
-        #     player(int): specific player in the game
-        #     turn(int): rotation of players rolling dice and moving pieces
+        Args:
+            player(int): specific player in the game
+            turn(int): rotation of players rolling dice and moving pieces
             
-        # Side effects:
-        #     print a player winner depending on which player moves all their pieces to their goal
+        Side effects:
+            print a player winner depending on which player moves all their pieces to their goal
+        '''
         turn = 0
         while not self.winner:
             player = 1 + (turn % 2)
