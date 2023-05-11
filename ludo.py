@@ -187,7 +187,7 @@ class Ludo:
             self.save_game(filepath)
             print("Game has been saved.")
             exit()
-                
+                          
     def play(self):
         # Starts the ludo game from turn 1
         
@@ -237,8 +237,9 @@ class Ludo:
         self.winner = loaded_game["winner"]
         self.player1_spaces_moved = loaded_game["player1_spaces_moved"]
         self.player2_spaces_moved = loaded_game["player2_spaces_moved"]
-        self.player_name_dict = loaded_game["player_name_dict"]       
+        self.player_name_dict = loaded_game["player_name_dict"]  
         
+        print("Game has been loaded.") 
         
 def argument_parser(args):
     parser = ArgumentParser()
