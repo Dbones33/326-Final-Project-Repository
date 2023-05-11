@@ -210,7 +210,7 @@ class Ludo:
         
     def __repr__(self):
         print(f"{self.player_name_dict[1]} moved {self.player1_spaces_moved} spaces.")
-        print(f"{self.player_name_dict[2]} moved {self.player1_spaces_moved} spaces.")
+        print(f"{self.player_name_dict[2]} moved {self.player2_spaces_moved} spaces.")
         print(f"{self.player_name_dict[1]} got sent back to start {self.sent_back_count[1]} times.")
         print(f"{self.player_name_dict[2]} got sent back to start {self.sent_back_count[2]} times.")
         
