@@ -42,7 +42,7 @@ class Board:
         
         Args:
             index (int): index of a cell on the board
-            value (int): state of the cell on the board
+            value (int): state of the cell on the board 
         """
         self.board[index - 1] = value
         
@@ -231,9 +231,14 @@ class Ludo:
     def load_game(self, filepath):
         with open(filepath, 'r') as openfile:
             loaded_game = json.load(openfile)
-                  
-        print(loaded_game)
-        print(type(loaded_game))
+         
+        self.board.board = loaded_game["board"] 
+        self.players = loaded_game["players"]
+        self.winner = loaded_game["winner"]
+        self.player1_spaces_moved = loaded_game["player1_spaces_moved"]
+        self.player2_spaces_moved = loaded_game["player2_spaces_moved"]
+        self.player_name_dict = loaded_game["player_name_dict"]       
+        
         
 def argument_parser(args):
     parser = ArgumentParser()
