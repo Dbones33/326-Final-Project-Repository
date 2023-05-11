@@ -222,6 +222,15 @@ class Ludo:
         print(f"{self.player_name_dict[2]} got sent back to start {self.sent_back_count[2]} times.")
         
     def bar_plot(self):
+        """Creates a barplot after a player wins the game, which compares how
+        many total spaces were moved by each of the two players.
+        
+        Side effects:
+            Creates a dataframe using the player1_spaces_moved and the
+            player2_spaces_moved attributes. Then creates the barplot comparing
+            the two attributes, and displays the barplot on the user's 
+            interface once a player wins the game.
+        """
         if self.winner:
             spaces_moved = OrderedDict([ ('Players', ['Player1', 'Player2']),
                             ('Spaces moved', [self.player1_spaces_moved, 
@@ -254,6 +263,18 @@ class Ludo:
             json.dump(saved_game, f)
             
     def load_game(self, filepath):
+        """Loads in an existing game state from a JSON file, which comes from 
+        the save_game method.
+        
+        Args:
+            filepath (str): the path to a JSON file from the save_game method,
+            the file contains the attributes of the game state at the time the
+            game was saved.
+            
+        Side effects:
+            Changes the current state of the game by changing the attributes of 
+            the game to those of the game that was saved.
+        """
         with open(filepath, 'r') as openfile:
             loaded_game = json.load(openfile) 
         
