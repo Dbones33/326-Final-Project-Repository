@@ -74,6 +74,7 @@ class Ludo:
         self.player1_spaces_moved = 0
         self.player2_spaces_moved = 0
         self.player_name_dict = {1: player1_name, 2: player2_name}
+        self.sent_back_count = {1: 0, 2:0}
         
 
     def print_board(self):
@@ -114,6 +115,7 @@ class Ludo:
             self.board[position] = 0
             piece = self.players[player].index(position)
             self.players[player][piece] = 0
+            self.sent_back_count[player] += 1
             print(f"Player {player}'s piece got sent back to the start")
             
     def move_piece(self, player, piece, steps):
@@ -206,6 +208,12 @@ class Ludo:
 
         print(f"Congratulations, player {self.winner}! You have won the game!")
         
+    def __repr__(self):
+        print(f"{self.player_name_dict[1]} moved {self.player1_spaces_moved} spaces.")
+        print(f"{self.player_name_dict[2]} moved {self.player1_spaces_moved} spaces.")
+        print(f"{self.player_name_dict[1]} got sent back to start {self.sent_back_count[1]} times.")
+        print(f"{self.player_name_dict[2]} got sent back to start {self.sent_back_count[2]} times.")
+        
     def bar_plot(self):
         if self.winner:
             spaces_moved = OrderedDict([ ('Players', ['Player1', 'Player2']),
@@ -262,7 +270,7 @@ if __name__ == "__main__":
     
     game.play()
     
-   
+    game.__repr__()
     
     game.bar_plot()
     
