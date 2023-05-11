@@ -69,12 +69,12 @@ class Ludo:
     def __init__(self, player1_name, player2_name):
         # Initializes the players and board before playing Ludo.
         self.board = Board()
-        self.players = {1: [0]*4, 2: [0]*4}
+        self.players = {'1': [0]*4, '2': [0]*4}
         self.winner = None
         self.player1_spaces_moved = 0
         self.player2_spaces_moved = 0
-        self.player_name_dict = {1: player1_name, 2: player2_name}
-        self.sent_back_count = {1: 0, 2:0}
+        self.player_name_dict = {'1': player1_name, '2': player2_name}
+        self.sent_back_count = {'1': 0, '2':0}
         
 
     def print_board(self):
@@ -202,7 +202,7 @@ class Ludo:
         turn = 0
         while not self.winner:
             player = 1 + (turn % 2)
-            self.play_turn(player)
+            self.play_turn(str(player))
             self.print_board()
             turn += 1
 
@@ -240,7 +240,10 @@ class Ludo:
     def load_game(self, filepath):
         with open(filepath, 'r') as openfile:
             loaded_game = json.load(openfile)
+            
+        #print(loaded_game)
          
+        
         self.board.board = loaded_game["board"] 
         self.players = loaded_game["players"]
         self.winner = loaded_game["winner"]
@@ -250,6 +253,7 @@ class Ludo:
         self.sent_back_count = loaded_game["sent_back_count"]    
         
         print("Game has been loaded.") 
+        
         
 def argument_parser(args):
     parser = ArgumentParser()
