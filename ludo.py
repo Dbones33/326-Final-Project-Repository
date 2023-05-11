@@ -254,7 +254,7 @@ def argument_parser(args):
                         help= "Allow player1 to change their name")
     parser.add_argument("--player2_name", default = "Player 2", type=str,
                         help= "Allow player2 to change their name")
-    parser.add_argument("--load_game", type = argparse.FileType("r"),
+    parser.add_argument("--load_game", type = str,
                         help= "Load game from JSON file")
     return parser.parse_args(args)
 
