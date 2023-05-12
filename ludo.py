@@ -139,7 +139,7 @@ class Ludo:
         self.restart(new_pos)
         
         #updating spaces moved attributes
-        if player == 1:
+        if player == '1':
             self.player1_spaces_moved += steps
         else:
             self.player2_spaces_moved += steps
@@ -215,11 +215,13 @@ class Ludo:
 
         print(f"Congratulations, player {self.winner}! You have won the game!")
         
-    def __repr__(self):
-        print(f"{self.player_name_dict[1]} moved {self.player1_spaces_moved} spaces.")
-        print(f"{self.player_name_dict[2]} moved {self.player2_spaces_moved} spaces.")
-        print(f"{self.player_name_dict[1]} got sent back to start {self.sent_back_count[1]} times.")
-        print(f"{self.player_name_dict[2]} got sent back to start {self.sent_back_count[2]} times.")
+    def __str__(self):
+        """Informal representation of the number of restarts that each player has
+        
+        Returns:
+            str: string representation
+        """
+        return f"{self.player_name_dict['1']} restarts: {self.sent_back_count['1']}\n{self.player_name_dict['2']} restarts: {self.sent_back_count['2']}"
         
     def bar_plot(self):
         """Creates a barplot after a player wins the game, which compares how
@@ -326,7 +328,7 @@ if __name__ == "__main__":
     
     game.play()
     
-    game.__repr__()
+    print(game)
     
     game.bar_plot()
     
