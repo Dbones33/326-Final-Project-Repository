@@ -75,7 +75,7 @@ class Ludo:
         self.player1_spaces_moved = 0
         self.player2_spaces_moved = 0
         self.player_name_dict = {'1': player1_name, '2': player2_name}
-        self.sent_back_count = {'1': 0, '2':0}
+        self.sent_back_count = {'1': 0, '2': 0}
         
 
     def print_board(self):
