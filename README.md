@@ -27,7 +27,7 @@ play_turn                            Emmitt Anton        List comprehension
 
 
 class Board, class Ludo              Justin Gold         Composition of two original classes 
-__getitem__, __setitem__, __repr__   Justin Gold         Magic methods other than init
+__getitem__, __setitem__, __str__    Justin Gold         Magic methods other than init
 
 
 save_game                            Sam Henderlite      Use of json.dump()
