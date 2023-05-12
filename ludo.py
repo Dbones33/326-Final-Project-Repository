@@ -16,9 +16,6 @@ class Board:
         
     Attributes:
         board (list of int): a baord filled with 0's
-        
-    Returns:
-        A board of 0's that is 4 rows and 13 columns
     """
     def __init__(self):
         """Creating the board that will have 52 0's 
